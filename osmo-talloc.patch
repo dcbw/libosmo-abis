@@ -1,0 +1,37 @@
+From 6eda430372edbf4dcebb9181ae7ef9f4daff544e Mon Sep 17 00:00:00 2001
+From: Jan Engelhardt <jengelh@inai.de>
+Date: Sun, 17 Feb 2013 21:18:44 +0100
+Subject: [PATCH] build: link to talloc
+
+The source files use talloc, so link to talloc.
+---
+ configure.ac    |    1 +
+ src/Makefile.am |    2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+Index: libosmo-abis-2.0.0/configure.ac
+===================================================================
+--- libosmo-abis-2.0.0.orig/configure.ac
++++ libosmo-abis-2.0.0/configure.ac
+@@ -86,6 +86,7 @@ AS_IF([test "x$ENABLE_ORTP" = "xyes"], [
+ ])
+ AM_CONDITIONAL(ENABLE_ORTP, test "x$ENABLE_ORTP" = "xyes")
+ AC_SUBST(ENABLE_ORTP)
++PKG_CHECK_MODULES([TALLOC], [talloc])
+ 
+ AC_ARG_ENABLE([dahdi],
+ 	      AC_HELP_STRING([--disable-dahdi],
+Index: libosmo-abis-2.0.0/src/Makefile.am
+===================================================================
+--- libosmo-abis-2.0.0.orig/src/Makefile.am
++++ libosmo-abis-2.0.0/src/Makefile.am
+@@ -15,7 +15,7 @@ AM_CFLAGS= -Wall \
+ 	$(COVERAGE_CFLAGS) \
+ 	$(NULL)
+ AM_LDFLAGS = $(COVERAGE_LDFLAGS)
+-COMMONLIBS = \
++COMMONLIBS = ${TALLOC_LIBS} \
+ 	$(LIBOSMOCORE_LIBS) \
+ 	$(LIBOSMOGSM_LIBS) \
+ 	$(LIBOSMOVTY_LIBS) \
+
